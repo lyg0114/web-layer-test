@@ -1,9 +1,9 @@
 package com.apipractice.domain.study.api;
 
+import com.apipractice.domain.study.service.GreetingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,36 +22,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StudyApiController {
 
+  private final GreetingService greetingService;
+
   @GetMapping("/guest/{param}")
-  public ResponseEntity<Void> guest(@PathVariable String param) {
+  public ResponseEntity<String> guest(@PathVariable String param) {
+
     log.info("########################################");
     log.info("call guest + {}", param);
     log.info("########################################");
-    return ResponseEntity.ok().build();
+
+    return ResponseEntity
+        .ok()
+        .body("hello" + param);
   }
 
   @GetMapping("/user/{param}")
-  public ResponseEntity<Void> user(@PathVariable String param) {
+  public ResponseEntity<String> user(@PathVariable String param) {
+
     log.info("########################################");
     log.info("call user + {}", param);
     log.info("########################################");
-    return ResponseEntity.ok().build();
+
+    return ResponseEntity
+        .ok()
+        .body(greetingService.greet(param));
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping("/admin/{param}")
-  public ResponseEntity<Void> admin(@PathVariable String param) {
-    log.info("########################################");
-    log.info("call admin + {}", param);
-    log.info("########################################");
-    return ResponseEntity.ok().build();
-  }
-
-  @GetMapping("/other/{param}")
-  public ResponseEntity<Void> other(@PathVariable String param) {
-    log.info("########################################");
-    log.info("call other + {}", param);
-    log.info("########################################");
-    return ResponseEntity.ok().build();
-  }
 }

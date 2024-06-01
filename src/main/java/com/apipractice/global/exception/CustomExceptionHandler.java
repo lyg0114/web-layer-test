@@ -10,8 +10,6 @@ import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -65,18 +63,6 @@ public class CustomExceptionHandler {
 
   }
 
-  @ExceptionHandler(AccessDeniedException.class)
-  public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-
-    log.error( "[AccessDeniedException] url: {} | errorCode: {} | errorMessage: {} | cause Exception: ",
-        request.getRequestURL(), ACCESS_DENIED, ACCESS_DENIED.getErrorMessage(), ex);
-
-    CustomException customException = new CustomException(ACCESS_DENIED);
-    return ResponseEntity
-        .status(INVALID_VALUE.getHttpStatus())
-        .body(new ErrorResponse(customException));
-
-  }
 
   @ExceptionHandler(DataIntegrityViolationException.class)
   public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest request) {

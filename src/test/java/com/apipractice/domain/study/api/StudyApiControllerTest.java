@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
@@ -22,15 +23,13 @@ import org.springframework.test.web.servlet.MockMvc;
  * @since : 01.06.24
  */
 
-//@MockBean(JpaMetamodelMappingContext.class)
+@MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(controllers = StudyApiController.class)
 @Import(SecurityConfig.class)
 class StudyApiControllerTest {
 
-  @Autowired
-  private MockMvc mockMvc;
-  @MockBean
-  private GreetingService service;
+  @Autowired private MockMvc mockMvc;
+  @MockBean private GreetingService service;
 
   @Test
   void shouldReturnDefaultMessage() throws Exception {

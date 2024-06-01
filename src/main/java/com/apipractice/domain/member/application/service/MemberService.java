@@ -6,6 +6,7 @@ import static org.springframework.util.StringUtils.hasText;
 
 import com.apipractice.domain.member.application.repository.MemberRepository;
 import com.apipractice.domain.member.dto.MemberDto.SignUpRequest;
+import com.apipractice.domain.member.entity.Member;
 import com.apipractice.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
   private final MemberRepository memberRepository;
+
+  public Member findMember(Long id) {
+    return memberRepository.findById(id)
+        .orElseThrow();
+  }
 
   @Transactional
   public void signUp(SignUpRequest requestDto) {

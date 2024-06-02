@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.apipractice.domain.member.application.service.MemberService;
 import com.apipractice.domain.member.entity.Member;
 import com.apipractice.global.SecurityConfig;
+import com.apipractice.global.handler.CustomAccessDeniedHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(controllers = MemberApiController.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, CustomAccessDeniedHandler.class})
 public class MemberApiControllerTest {
 
   @Autowired private MockMvc mockMvc;

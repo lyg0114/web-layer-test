@@ -8,13 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.apipractice.domain.member.application.service.MemberService;
 import com.apipractice.domain.member.entity.Member;
 import com.apipractice.global.SecurityConfig;
-import com.apipractice.global.handler.CustomAccessDeniedHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
@@ -24,11 +24,12 @@ import org.springframework.test.web.servlet.MockMvc;
  */
 @MockBean(JpaMetamodelMappingContext.class)
 @WebMvcTest(controllers = MemberApiController.class)
-@Import({SecurityConfig.class, CustomAccessDeniedHandler.class})
-public class MemberApiControllerTest {
+@Import(SecurityConfig.class)
+public class MemberApiControllerTestV1 {
 
   @Autowired private MockMvc mockMvc;
   @MockBean private MemberService memberService;
+  @MockBean private AccessDeniedHandler accessDeniedHandler;
 
   @Test
   void findUserTest() throws Exception {
@@ -43,6 +44,7 @@ public class MemberApiControllerTest {
 
     this.mockMvc.perform(get(url)).
         andDo(print())
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+    ;
   }
 }
